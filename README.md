@@ -1,3 +1,56 @@
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0ea5e9,100:ef4444&height=220&section=header&text=TransitOps%20v2.0&fontSize=58&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=AI-Powered%20Real-Time%20Fleet%20Command%20Platform&descAlignY=60&descAlign=50" width="100%">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Java_21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white">
+  <img src="https://img.shields.io/badge/Spring_Boot_3.3.4-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
+  <img src="https://img.shields.io/badge/PostgreSQL_16-336791?style=for-the-badge&logo=postgresql&logoColor=white">
+  <img src="https://img.shields.io/badge/React_18.3-61DAFB?style=for-the-badge&logo=react&logoColor=white">
+  <img src="https://img.shields.io/badge/Tailwind_CSS_3-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white">
+  <img src="https://img.shields.io/badge/Docker_Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white">
+  <img src="https://img.shields.io/badge/JWT_Auth-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white">
+  <img src="https://img.shields.io/badge/Render_Ready-46E3B7?style=for-the-badge&logo=render&logoColor=white">
+</p>
+
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=3000&pause=500&color=0EA5E9&center=true&vCenter=true&width=700&lines=Spring+Boot+3.3.4+Enterprise+Architecture;Real-time+GPS+Leaflet+Maps+Tracking;7+Premium+Customizable+Dashboards;Flyway+Auto-Seeding+%2B+Quartz+Scheduler;Dockerized+&amp;+Render-Ready+Setup;JWT+Auth+%2B+Rate+Limiting+Security" alt="Typing SVG">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/github/stars/Sadique721/TransitOps?style=for-the-badge&color=0ea5e9">
+  <img src="https://img.shields.io/github/forks/Sadique721/TransitOps?style=for-the-badge&color=ef4444">
+  <img src="https://img.shields.io/badge/Build-Passing-brightgreen?style=for-the-badge&logo=github-actions">
+  <img src="https://img.shields.io/badge/License-MIT-10b981?style=for-the-badge">
+</p>
+
+---
+
+## 👨‍💻 Author & Architect
+
+<table>
+<tr>
+<td align="center" width="160">
+  <a href="https://github.com/Sadique721">
+    <img src="https://avatars.githubusercontent.com/Sadique721" width="110" style="border-radius:50%"><br>
+    <b>Md Sadique Amin</b><br>
+    <sub>Software Engineer & Full-Stack Architect</sub>
+  </a>
+</td>
+<td>
+
+**Md Sadique Amin** — Software Engineer, Telecom & Full-Stack Cloud Architect, AI Systems Developer.
+
+- 🔗 GitHub: [@Sadique721](https://github.com/Sadique721)
+- 📧 Email: mdsadiqueamin721786@gmail.com
+- 🏗️ Built: Enterprise BSS-OSS Telecom Suite, Diameter Protocol Engine, Angular & Flutter Apps, MSA AI Ecosystem
+
+</td>
+</tr>
+</table>
+
+---
+
 <div align="center">
 
 <img src="frontend/public/transport_hero.jpg" alt="TransitOps Fleet Command" width="100%" style="border-radius:16px;margin-bottom:16px"/>
@@ -439,3 +492,13 @@ sell copies of the Software.
 *Built with ❤️ by Md Sadique Amin — Powered by Spring Boot + React*
 
 </div>
+
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0ea5e9,100:ef4444&height=120&section=footer" width="100%">
+</p>
+
+<p align="center">
+  <b>Built with ❤️ by <a href="https://github.com/Sadique721">Md Sadique Amin</a></b><br>
+  <sub>Software Engineer & Full-Stack Architect & AI Systems Developer</sub>
+</p>
+
