@@ -1,0 +1,64 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: transitops-backend
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:pg-3383bbf0-entitykart.l.aivencloud.com}:${DB_PORT:13332}/${DB_NAME:defaultdb}?sslmode=${DB_SSL_MODE:require}
+    username: ${DB_USER:avnadmin}
+    password: ${DB_PASSWORD:avn_password_placeholder}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      # CRITICAL FIX: was "update" — dangerous in production (can silently alter/drop
+      # columns). Schema is now owned exclusively by Flyway migrations below;
+      # Hibernate only validates that entities match what Flyway created.
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME:entitykart@gmail.com}
+    password: ${MAIL_PASSWORD:mail_password_placeholder}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: false
+
+jwt:
+  secret: ${JWT_SECRET:transitops-super-secret-key-change-this-in-production-min-256-bits}
+  access-token-expiry-ms: 900000        # 15 minutes (PDF Rule #7 - session security)
+  refresh-token-expiry-ms: 604800000    # 7 days
+
+# CRITICAL FIX: CORS used to be allowedOriginPatterns=["*"]. Now restricted to an
+# explicit, configurable allow-list. Set ALLOWED_ORIGINS to a comma-separated list
+# of real frontend origins in production (e.g. https://app.transitops.com).
+cors:
+  allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000}
+
+# HIGH FIX: basic in-memory rate limiting (per client IP, sliding window).
+# Good enough for a single-instance deployment; swap for a Redis-backed limiter
+# (see RateLimitFilter.java comments) once running multiple backend instances.
+rate-limit:
+  enabled: ${RATE_LIMIT_ENABLED:true}
+  requests-per-minute: ${RATE_LIMIT_RPM:120}
+
+logging:
+  level:
+    com.transitops: INFO
+    org.springframework.security: WARN

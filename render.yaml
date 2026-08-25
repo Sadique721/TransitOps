@@ -1,0 +1,53 @@
+services:
+  # ── PostgreSQL Database ──
+  - type: db
+    name: transitops-db
+    databaseName: transitops
+    user: avnadmin
+    plan: free
+
+  # ── Backend Service ──
+  - type: web
+    name: transitops-backend
+    env: docker
+    dockerContext: backend
+    dockerfilePath: Dockerfile
+    plan: free
+    envVars:
+      - key: DB_HOST
+        fromDatabase:
+          name: transitops-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: transitops-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: transitops-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: transitops-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: transitops-db
+          property: password
+      - key: DB_SSL_MODE
+        value: disable
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        value: "*"
+
+  # ── Frontend Service ──
+  - type: web
+    name: transitops-frontend
+    env: docker
+    dockerContext: frontend
+    dockerfilePath: Dockerfile
+    plan: free
+    envVars:
+      - key: VITE_API_BASE
+        value: /api/v1

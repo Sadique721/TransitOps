@@ -1,0 +1,348 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ════════════════════════════════════════════════
+   TRANSITOPS — TRANSPORT COMMAND CENTER
+   Fleet Blue × Signal Red × Route Green × Amber
+   ════════════════════════════════════════════════ */
+
+:root {
+  /* ── BASE BACKGROUNDS ── */
+  --t-void:        #050A14;
+  --t-deep:        #080F1E;
+  --t-surface:     #0D1628;
+  --t-card:        #122038;
+  --t-border:      #1A2E4A;
+  --t-border-soft: rgba(14, 165, 233, 0.15);
+
+  /* ── TRANSPORT COLORS ── */
+  --t-fleet:       #0EA5E9;   /* Electric Blue   — routes, navigation */
+  --t-fleet-soft:  #7DD3FC;   /* Sky Blue highlight */
+  --t-signal:      #EF4444;   /* Signal Red      — alerts, emergency */
+  --t-signal-soft: #FCA5A5;   /* Light coral */
+  --t-route:       #22C55E;   /* Route Green     — available, on-route */
+  --t-route-soft:  #86EFAC;   /* Light green */
+  --t-amber:       #F59E0B;   /* Amber/Gold      — warnings, fuel */
+  --t-amber-soft:  #FCD34D;   /* Light amber */
+  --t-violet:      #8B5CF6;   /* Premium accent */
+
+  /* ── GRADIENTS ── */
+  --g-fleet:     linear-gradient(135deg, #0EA5E9, #0369A1);
+  --g-signal:    linear-gradient(135deg, #EF4444, #B91C1C);
+  --g-route:     linear-gradient(135deg, #22C55E, #15803D);
+  --g-amber:     linear-gradient(135deg, #F59E0B, #D97706);
+  --g-hero:      linear-gradient(135deg, #EF4444 0%, #F59E0B 33%, #22C55E 66%, #0EA5E9 100%);
+  --g-primary:   linear-gradient(135deg, #0EA5E9 0%, #0369A1 100%);
+  --g-surface:   linear-gradient(145deg, rgba(255,255,255,0.04) 0%, transparent 100%);
+
+  /* ── GLOWS ── */
+  --glow-fleet:   0 0 40px rgba(14,165,233,0.4);
+  --glow-signal:  0 0 40px rgba(239,68,68,0.4);
+  --glow-route:   0 0 40px rgba(34,197,94,0.35);
+  --glow-amber:   0 0 40px rgba(245,158,11,0.35);
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background: var(--t-void);
+  color: #D0E4F7;
+  font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Premium text selection */
+::selection {
+  background: rgba(14, 165, 233, 0.3);
+  color: #fff;
+}
+
+/* Fleet-themed scrollbar */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--t-deep); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #0EA5E9, #22C55E);
+  border-radius: 10px;
+}
+
+/* ── TYPOGRAPHY ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #EFF6FF;
+}
+
+/* ── ROUTE DIVIDER ── */
+.route-divider {
+  height: 2px;
+  background-image: repeating-linear-gradient(90deg, currentColor 0 6px, transparent 6px 14px);
+  opacity: 0.3;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--t-card);
+  border: 1px solid var(--t-border-soft);
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(145deg, rgba(14,165,233,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.card-glass {
+  background: rgba(8, 15, 30, 0.75);
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.04) inset;
+}
+
+/* ── INPUTS ── */
+.input {
+  background: rgba(255,255,255,0.04);
+  border: 1.5px solid rgba(14, 165, 233, 0.2);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: #D0E4F7;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: all 0.25s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+.input::placeholder { color: rgba(125, 211, 252, 0.3); }
+.input:focus {
+  border-color: var(--t-fleet);
+  background: rgba(14, 165, 233, 0.07);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+}
+
+/* ── BUTTONS ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  padding: 9px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  letter-spacing: 0.01em;
+}
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* FLEET BLUE — primary action */
+.btn-primary {
+  background: var(--g-fleet);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(14,165,233,0.4);
+}
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #38BDF8, #0EA5E9);
+  box-shadow: 0 6px 28px rgba(14,165,233,0.55);
+  transform: translateY(-1px);
+}
+
+/* SIGNAL RED */
+.btn-signal {
+  background: var(--g-signal);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(239,68,68,0.4);
+}
+.btn-signal:hover:not(:disabled) {
+  box-shadow: 0 6px 28px rgba(239,68,68,0.55);
+  transform: translateY(-1px);
+}
+
+/* ROUTE GREEN */
+.btn-route {
+  background: var(--g-route);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(34,197,94,0.35);
+}
+.btn-route:hover:not(:disabled) {
+  box-shadow: 0 6px 28px rgba(34,197,94,0.5);
+  transform: translateY(-1px);
+}
+
+/* AMBER */
+.btn-amber {
+  background: var(--g-amber);
+  color: #0D1628;
+  font-weight: 800;
+  box-shadow: 0 4px 20px rgba(245,158,11,0.35);
+}
+.btn-amber:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 28px rgba(245,158,11,0.5);
+}
+
+/* GHOST */
+.btn-ghost {
+  background: rgba(14,165,233,0.08);
+  border: 1px solid rgba(14,165,233,0.25);
+  color: #7DD3FC;
+}
+.btn-ghost:hover:not(:disabled) {
+  background: rgba(14,165,233,0.16);
+  border-color: rgba(14,165,233,0.4);
+}
+
+/* DANGER */
+.btn-danger {
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.25);
+  color: #EF4444;
+}
+.btn-danger:hover:not(:disabled) {
+  background: rgba(239,68,68,0.2);
+  box-shadow: var(--glow-signal);
+}
+
+/* ── STATUS BADGES ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.badge-success { background: rgba(34,197,94,0.12);  color: #86EFAC; border: 1px solid rgba(34,197,94,0.25); }
+.badge-warning { background: rgba(245,158,11,0.12); color: #FCD34D; border: 1px solid rgba(245,158,11,0.25); }
+.badge-danger  { background: rgba(239,68,68,0.12);  color: #FCA5A5; border: 1px solid rgba(239,68,68,0.25); }
+.badge-info    { background: rgba(14,165,233,0.12);  color: #7DD3FC; border: 1px solid rgba(14,165,233,0.25); }
+.badge-violet  { background: rgba(139,92,246,0.12); color: #C4B5FD; border: 1px solid rgba(139,92,246,0.25); }
+
+/* ── TABLES ── */
+.table-shell th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(125, 211, 252, 0.5);
+  padding: 12px 16px;
+}
+.table-shell td {
+  padding: 12px 16px;
+  font-size: 13px;
+  border-top: 1px solid rgba(14,165,233,0.08);
+  color: #A8C8E8;
+}
+.table-shell tr:hover td {
+  background: rgba(14,165,233,0.04);
+}
+
+/* ── STATUS INDICATORS ── */
+.status-active  { color: #4ADE80; }
+.status-idle    { color: #FCD34D; }
+.status-alert   { color: #F87171; }
+.status-offline { color: rgba(148,163,184,0.5); }
+
+/* ── ANIMATIONS ── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 currentColor; }
+  50% { opacity: 0.6; box-shadow: 0 0 0 4px transparent; }
+}
+.live-dot { animation: pulse-dot 1.6s ease-in-out infinite; }
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in-up { animation: fade-in-up 0.45s ease both; }
+
+@keyframes glow-pulse-fleet {
+  0%, 100% { box-shadow: 0 0 20px rgba(14,165,233,0.3); }
+  50%       { box-shadow: 0 0 45px rgba(14,165,233,0.6); }
+}
+.glow-fleet { animation: glow-pulse-fleet 3s ease-in-out infinite; }
+
+@keyframes glow-pulse-signal {
+  0%, 100% { box-shadow: 0 0 20px rgba(239,68,68,0.3); }
+  50%       { box-shadow: 0 0 45px rgba(239,68,68,0.6); }
+}
+.glow-signal { animation: glow-pulse-signal 2s ease-in-out infinite; }
+
+@keyframes scanline {
+  0%   { top: 0; }
+  100% { top: 100%; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+.shimmer-btn {
+  background-size: 600px 100%;
+  animation: shimmer 2.5s infinite;
+}
+
+/* ── GRADIENT TEXT ── */
+.text-gradient-fleet {
+  background: linear-gradient(135deg, #38BDF8, #0EA5E9);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.text-gradient-signal {
+  background: linear-gradient(135deg, #F87171, #EF4444);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.text-gradient-route {
+  background: linear-gradient(135deg, #4ADE80, #22C55E);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.text-gradient-multi {
+  background: linear-gradient(135deg, #EF4444, #F59E0B, #22C55E, #0EA5E9);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  background: linear-gradient(180deg, #080F1E 0%, #0D1628 100%);
+  border-right: 1px solid rgba(14,165,233,0.12);
+}
+
+/* ── STAT CARD ── */
+.stat-card {
+  transition: all 0.25s ease;
+}
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+
+/* ── LEGACY ALIASES ── */
+.bg-base-950 { background-color: var(--t-void) !important; }
+.bg-base-900 { background-color: var(--t-deep) !important; }
+.bg-base-800 { background-color: var(--t-surface) !important; }
+.bg-base-700 { background-color: var(--t-card) !important; }
+.text-route-cyan  { color: var(--t-fleet) !important; }
+.text-route-amber { color: var(--t-amber) !important; }
+.text-route-red   { color: var(--t-signal) !important; }
+.text-route-green { color: var(--t-route) !important; }
+
+/* ── KPI COLOR SYSTEM ── */
+.kpi-fleet  { border-left: 3px solid var(--t-fleet); }
+.kpi-signal { border-left: 3px solid var(--t-signal); }
+.kpi-route  { border-left: 3px solid var(--t-route); }
+.kpi-amber  { border-left: 3px solid var(--t-amber); }

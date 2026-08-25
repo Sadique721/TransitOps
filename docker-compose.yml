@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # ── PostgreSQL Database ──
+  db:
+    image: postgres:16-alpine
+    container_name: transitops-db
+    environment:
+      POSTGRES_DB: transitops
+      POSTGRES_USER: avnadmin
+      POSTGRES_PASSWORD: avn_password_placeholder
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U avnadmin -d transitops"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ── Spring Boot Backend ──
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: transitops-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=transitops
+      - DB_USER=avnadmin
+      - DB_PASSWORD=avn_password_placeholder
+      - DB_SSL_MODE=disable
+      - JWT_SECRET=transitops-super-secret-key-change-this-in-production-min-256-bits
+      - ALLOWED_ORIGINS=*
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # ── React + Nginx Frontend ──
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_BASE=/api/v1
+    container_name: transitops-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
