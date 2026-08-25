@@ -102,14 +102,17 @@ public class TripService {
     // ===================== DISPATCH: Draft -> Dispatched =====================
     @Transactional
     public Trip dispatch(Long tripId) {
-        Trip trip = findById(tripId);
+        Trip trip = tripRepository.findByIdForUpdate(tripId)
+                .orElseThrow(() -> new ResourceNotFoundException("Trip not found: " + tripId));
 
         if (trip.getStatus() != TripStatus.DRAFT) {
             throw new BusinessRuleException("Only Draft trips can be dispatched. Current status: " + trip.getStatus());
         }
 
-        Vehicle vehicle = trip.getVehicle();
-        Driver driver = trip.getDriver();
+        Vehicle vehicle = vehicleRepository.findByIdForUpdate(trip.getVehicle().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found: " + trip.getVehicle().getId()));
+        Driver driver = driverRepository.findByIdForUpdate(trip.getDriver().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Driver not found: " + trip.getDriver().getId()));
 
         // Rule: vehicle must be Available (never Retired/In Shop/On Trip)
         if (vehicle.getStatus() != VehicleStatus.AVAILABLE) {
@@ -155,14 +158,17 @@ public class TripService {
     // ===================== COMPLETE: Dispatched -> Completed =====================
     @Transactional
     public Trip complete(Long tripId, TripCompleteRequest request) {
-        Trip trip = findById(tripId);
+        Trip trip = tripRepository.findByIdForUpdate(tripId)
+                .orElseThrow(() -> new ResourceNotFoundException("Trip not found: " + tripId));
 
         if (trip.getStatus() != TripStatus.DISPATCHED) {
             throw new BusinessRuleException("Only Dispatched trips can be completed. Current status: " + trip.getStatus());
         }
 
-        Vehicle vehicle = trip.getVehicle();
-        Driver driver = trip.getDriver();
+        Vehicle vehicle = vehicleRepository.findByIdForUpdate(trip.getVehicle().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found"));
+        Driver driver = driverRepository.findByIdForUpdate(trip.getDriver().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Driver not found"));
 
         trip.setFinalOdometer(request.getFinalOdometer());
         trip.setFuelConsumed(request.getFuelConsumed());
@@ -209,7 +215,8 @@ public class TripService {
     // ===================== CANCEL: Dispatched -> Cancelled =====================
     @Transactional
     public Trip cancel(Long tripId) {
-        Trip trip = findById(tripId);
+        Trip trip = tripRepository.findByIdForUpdate(tripId)
+                .orElseThrow(() -> new ResourceNotFoundException("Trip not found: " + tripId));
 
         if (trip.getStatus() != TripStatus.DISPATCHED && trip.getStatus() != TripStatus.DRAFT) {
             throw new BusinessRuleException("Only Draft or Dispatched trips can be cancelled. Current status: " + trip.getStatus());
@@ -219,8 +226,10 @@ public class TripService {
         trip.setStatus(TripStatus.CANCELLED);
 
         if (wasDispatched) {
-            Vehicle vehicle = trip.getVehicle();
-            Driver driver = trip.getDriver();
+            Vehicle vehicle = vehicleRepository.findByIdForUpdate(trip.getVehicle().getId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found"));
+            Driver driver = driverRepository.findByIdForUpdate(trip.getDriver().getId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Driver not found"));
             vehicle.setStatus(VehicleStatus.AVAILABLE);
             driver.setStatus(DriverStatus.AVAILABLE);
             vehicleRepository.save(vehicle);

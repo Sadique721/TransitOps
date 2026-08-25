@@ -24,6 +24,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
+    private final com.transitops.security.LoginRateLimiterService loginRateLimiterService;
 
     @Transactional
     public User register(RegisterUserRequest request) {
@@ -39,11 +40,16 @@ public class AuthService {
         return userRepository.save(user);
     }
 
-    public LoginResponse login(LoginRequest request) {
+    public LoginResponse login(LoginRequest request, String ip) {
+        if (loginRateLimiterService.isBlocked(ip, request.getEmail())) {
+            throw new com.transitops.exception.BusinessRuleException("Too many failed login attempts. Please try again in 15 minutes.");
+        }
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+            loginRateLimiterService.recordSuccess(ip, request.getEmail());
         } catch (Exception ex) {
+            loginRateLimiterService.recordFailure(ip, request.getEmail());
             throw new BadCredentialsException("Invalid email or password");
         }
 

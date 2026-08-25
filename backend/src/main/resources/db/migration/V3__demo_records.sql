@@ -7,7 +7,7 @@
 -- Hashed password for both accounts is 'Amin@123' (BCrypt)
 INSERT INTO users (name, email, password, role, refresh_token, mfa_enabled, active, created_at, updated_at, tenant_id)
 VALUES 
-('Admin Manager', 'entitykart@gmail.com', '$2a$10$wBsk4e4qXwB62aH6V76VTe5o558l.x6Pq04r.1.6h.4wHlI0nB8uC', 'FLEET_MANAGER', NULL, FALSE, TRUE, '2024-05-29 08:00:00', '2024-05-29 08:00:00', 'public'),
+('Md Sadique Amin', 'entitykart@gmail.com', '$2a$10$wBsk4e4qXwB62aH6V76VTe5o558l.x6Pq04r.1.6h.4wHlI0nB8uC', 'FLEET_MANAGER', NULL, FALSE, TRUE, '2024-05-29 08:00:00', '2024-05-29 08:00:00', 'public'),
 ('Michael Driver', 'driver@transitops.com', '$2a$10$wBsk4e4qXwB62aH6V76VTe5o558l.x6Pq04r.1.6h.4wHlI0nB8uC', 'DRIVER', NULL, FALSE, TRUE, '2024-05-29 08:00:00', '2024-05-29 08:00:00', 'public')
 ON CONFLICT (email) DO NOTHING;
 

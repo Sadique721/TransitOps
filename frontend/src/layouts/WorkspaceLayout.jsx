@@ -24,7 +24,7 @@ export default function WorkspaceLayout({ children }) {
   const location = useLocation();
   const { logout } = useAuth() || {};
 
-  let user = { name: 'Fleet Admin', role: 'FLEET_MANAGER' };
+  let user = { name: 'Md Sadique Amin', role: 'FLEET_MANAGER' };
   try { const s = localStorage.getItem('user'); if (s) user = JSON.parse(s); } catch {}
 
   const items = NAV_ALL.filter(i => i.roles.includes(user.role));
@@ -92,9 +92,12 @@ export default function WorkspaceLayout({ children }) {
         {/* User + Sign out */}
         <div style={{ padding:'8px 8px 14px', borderTop:'1px solid rgba(14,165,233,0.08)', flexShrink:0 }}>
           {open && (
-            <div style={{ background:'rgba(14,165,233,0.06)', border:'1px solid rgba(14,165,233,0.12)', borderRadius:10, padding:'9px 12px', marginBottom:8 }}>
-              <div style={{ fontSize:11, fontWeight:700, color:'#D0E4F7' }}>{user.name}</div>
-              <div style={{ fontSize:9, color:'rgba(125,211,252,0.45)', marginTop:1 }}>{user.role.replace('_',' ')}</div>
+            <div style={{ background:'rgba(14,165,233,0.06)', border:'1px solid rgba(14,165,233,0.12)', borderRadius:10, padding:'9px 12px', marginBottom:8, display:'flex', alignItems:'center', gap:10 }}>
+              <img src="/profile.jpg" alt="Profile" style={{ width:28, height:28, borderRadius:'50%', objectFit:'cover', border:'1px solid rgba(14,165,233,0.2)' }} />
+              <div>
+                <div style={{ fontSize:11, fontWeight:700, color:'#D0E4F7' }}>{user.role === 'DRIVER' ? user.name : 'Md Sadique Amin'}</div>
+                <div style={{ fontSize:9, color:'rgba(125,211,252,0.45)', marginTop:1 }}>{user.role.replace('_',' ')}</div>
+              </div>
             </div>
           )}
           <button
@@ -140,10 +143,8 @@ export default function WorkspaceLayout({ children }) {
             </div>
             {/* User */}
             <div style={{ display:'flex', alignItems:'center', gap:8, cursor:'pointer', padding:'5px 10px', background:'rgba(14,165,233,0.06)', border:'1px solid rgba(14,165,233,0.16)', borderRadius:8 }}>
-              <div style={{ width:26, height:26, background:'linear-gradient(135deg,#0EA5E9,#22C55E)', borderRadius:'50%', display:'flex', alignItems:'center', justifyContent:'center', fontSize:12, fontWeight:900, color:'#fff' }}>
-                {user.name?.charAt(0)?.toUpperCase() || 'A'}
-              </div>
-              <span style={{ fontSize:12, fontWeight:600, color:'#D0E4F7' }}>{user.name}</span>
+              <img src="/profile.jpg" alt="Profile" style={{ width:26, height:26, borderRadius:'50%', objectFit:'cover', border:'1.5px solid rgba(14,165,233,0.3)' }} />
+              <span style={{ fontSize:12, fontWeight:600, color:'#D0E4F7' }}>{user.role === 'DRIVER' ? user.name : 'Md Sadique Amin'}</span>
             </div>
           </div>
         </header>

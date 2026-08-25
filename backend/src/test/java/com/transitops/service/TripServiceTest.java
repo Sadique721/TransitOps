@@ -104,7 +104,9 @@ class TripServiceTest {
 
     @Test
     void dispatch_shouldSucceed_whenAllRulesPass() {
-        when(tripRepository.findById(10L)).thenReturn(java.util.Optional.of(draftTrip));
+        when(tripRepository.findByIdForUpdate(10L)).thenReturn(java.util.Optional.of(draftTrip));
+        when(vehicleRepository.findByIdForUpdate(1L)).thenReturn(java.util.Optional.of(availableVehicle));
+        when(driverRepository.findByIdForUpdate(1L)).thenReturn(java.util.Optional.of(validDriver));
         when(vehicleRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
         when(driverRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
         when(tripRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
@@ -121,7 +123,7 @@ class TripServiceTest {
     @Test
     void dispatch_shouldThrow_whenTripNotDraft() {
         draftTrip.setStatus(TripStatus.COMPLETED);
-        when(tripRepository.findById(10L)).thenReturn(java.util.Optional.of(draftTrip));
+        when(tripRepository.findByIdForUpdate(10L)).thenReturn(java.util.Optional.of(draftTrip));
 
         assertThatThrownBy(() -> tripService.dispatch(10L))
                 .isInstanceOf(BusinessRuleException.class)
@@ -131,7 +133,9 @@ class TripServiceTest {
     @Test
     void dispatch_shouldThrow_whenVehicleNotAvailable() {
         availableVehicle.setStatus(VehicleStatus.MAINTENANCE);
-        when(tripRepository.findById(10L)).thenReturn(java.util.Optional.of(draftTrip));
+        when(tripRepository.findByIdForUpdate(10L)).thenReturn(java.util.Optional.of(draftTrip));
+        when(vehicleRepository.findByIdForUpdate(1L)).thenReturn(java.util.Optional.of(availableVehicle));
+        when(driverRepository.findByIdForUpdate(1L)).thenReturn(java.util.Optional.of(validDriver));
 
         assertThatThrownBy(() -> tripService.dispatch(10L))
                 .isInstanceOf(BusinessRuleException.class)
@@ -141,7 +145,9 @@ class TripServiceTest {
     @Test
     void dispatch_shouldThrow_whenDriverLicenseExpired() {
         validDriver.setLicenseExpiryDate(LocalDate.now().minusDays(1));
-        when(tripRepository.findById(10L)).thenReturn(java.util.Optional.of(draftTrip));
+        when(tripRepository.findByIdForUpdate(10L)).thenReturn(java.util.Optional.of(draftTrip));
+        when(vehicleRepository.findByIdForUpdate(1L)).thenReturn(java.util.Optional.of(availableVehicle));
+        when(driverRepository.findByIdForUpdate(1L)).thenReturn(java.util.Optional.of(validDriver));
 
         assertThatThrownBy(() -> tripService.dispatch(10L))
                 .isInstanceOf(BusinessRuleException.class)
@@ -151,7 +157,9 @@ class TripServiceTest {
     @Test
     void dispatch_shouldThrow_whenDriverNotAvailable() {
         validDriver.setStatus(DriverStatus.SUSPENDED);
-        when(tripRepository.findById(10L)).thenReturn(java.util.Optional.of(draftTrip));
+        when(tripRepository.findByIdForUpdate(10L)).thenReturn(java.util.Optional.of(draftTrip));
+        when(vehicleRepository.findByIdForUpdate(1L)).thenReturn(java.util.Optional.of(availableVehicle));
+        when(driverRepository.findByIdForUpdate(1L)).thenReturn(java.util.Optional.of(validDriver));
 
         assertThatThrownBy(() -> tripService.dispatch(10L))
                 .isInstanceOf(BusinessRuleException.class)
@@ -162,7 +170,9 @@ class TripServiceTest {
     void dispatch_shouldThrow_whenCargoExceedsCapacityAtDispatchTime() {
         // Capacity could have been edited down between draft creation and dispatch.
         availableVehicle.setMaxLoadCapacity(100.0);
-        when(tripRepository.findById(10L)).thenReturn(java.util.Optional.of(draftTrip));
+        when(tripRepository.findByIdForUpdate(10L)).thenReturn(java.util.Optional.of(draftTrip));
+        when(vehicleRepository.findByIdForUpdate(1L)).thenReturn(java.util.Optional.of(availableVehicle));
+        when(driverRepository.findByIdForUpdate(1L)).thenReturn(java.util.Optional.of(validDriver));
 
         assertThatThrownBy(() -> tripService.dispatch(10L))
                 .isInstanceOf(BusinessRuleException.class)
@@ -181,7 +191,9 @@ class TripServiceTest {
         request.setFinalOdometer(150.0);
         request.setFuelConsumed(30.0);
 
-        when(tripRepository.findById(10L)).thenReturn(java.util.Optional.of(draftTrip));
+        when(tripRepository.findByIdForUpdate(10L)).thenReturn(java.util.Optional.of(draftTrip));
+        when(vehicleRepository.findByIdForUpdate(1L)).thenReturn(java.util.Optional.of(availableVehicle));
+        when(driverRepository.findByIdForUpdate(1L)).thenReturn(java.util.Optional.of(validDriver));
         when(vehicleRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
         when(driverRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
         when(tripRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
@@ -197,7 +209,7 @@ class TripServiceTest {
 
     @Test
     void complete_shouldThrow_whenTripNotDispatched() {
-        when(tripRepository.findById(10L)).thenReturn(java.util.Optional.of(draftTrip)); // still DRAFT
+        when(tripRepository.findByIdForUpdate(10L)).thenReturn(java.util.Optional.of(draftTrip)); // still DRAFT
 
         assertThatThrownBy(() -> tripService.complete(10L, new TripCompleteRequest()))
                 .isInstanceOf(BusinessRuleException.class)
@@ -212,7 +224,9 @@ class TripServiceTest {
         availableVehicle.setStatus(VehicleStatus.ON_TRIP);
         validDriver.setStatus(DriverStatus.ON_TRIP);
 
-        when(tripRepository.findById(10L)).thenReturn(java.util.Optional.of(draftTrip));
+        when(tripRepository.findByIdForUpdate(10L)).thenReturn(java.util.Optional.of(draftTrip));
+        when(vehicleRepository.findByIdForUpdate(1L)).thenReturn(java.util.Optional.of(availableVehicle));
+        when(driverRepository.findByIdForUpdate(1L)).thenReturn(java.util.Optional.of(validDriver));
         when(vehicleRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
         when(driverRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
         when(tripRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
@@ -227,7 +241,7 @@ class TripServiceTest {
     @Test
     void cancel_shouldThrow_whenTripAlreadyCompleted() {
         draftTrip.setStatus(TripStatus.COMPLETED);
-        when(tripRepository.findById(10L)).thenReturn(java.util.Optional.of(draftTrip));
+        when(tripRepository.findByIdForUpdate(10L)).thenReturn(java.util.Optional.of(draftTrip));
 
         assertThatThrownBy(() -> tripService.cancel(10L))
                 .isInstanceOf(BusinessRuleException.class)

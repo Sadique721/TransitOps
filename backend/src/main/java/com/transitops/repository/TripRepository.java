@@ -22,4 +22,8 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
 
     @Query("SELECT t FROM Trip t JOIN FETCH t.vehicle JOIN FETCH t.driver WHERE t.driver.id = :driverId")
     List<Trip> findByDriverId(Long driverId);
+
+    @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT t FROM Trip t WHERE t.id = :id")
+    java.util.Optional<Trip> findByIdForUpdate(@org.springframework.data.repository.query.Param("id") Long id);
 }

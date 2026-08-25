@@ -92,6 +92,65 @@ It provides real-time GPS tracking, AI-powered route optimization, predictive ma
 
 ---
 
+## 👥 Roles & System Workflow
+
+TransitOps features a highly collaborative ecosystem where multiple roles interact in real time to coordinate fleet operations:
+
+<p align="center">
+  <img src="images/transitops_roles_diagram.png" alt="TransitOps Roles Infographic" width="100%" style="border-radius:16px"/>
+</p>
+
+### System Roles & Operations Flow
+The diagram below details the operational responsibilities of each actor and how they communicate with the core system and each other:
+
+```mermaid
+graph TD
+    %% Roles definition
+    subgraph Users ["👨‍💻 System Actors"]
+        A["Md Sadique Amin<br/>(Fleet Manager)"]
+        B["Dispatcher"]
+        C["Driver"]
+        D["Financial Analyst"]
+    end
+
+    %% Backend System
+    subgraph System ["⚙️ TransitOps Platform"]
+        SYS_AUTH["JWT Authentication & Rate Limiter"]
+        SYS_DB[("PostgreSQL Database")]
+        SYS_MAPS["Live GPS Maps (Leaflet/Mapbox)"]
+        SYS_AI["AI Suggest & Intelligence (Fuel/Health)"]
+    end
+
+    %% Workflow Connections
+    A -->|"1. Oversees KPIs & Vehicles"| SYS_DB
+    A -->|"2. Schedules Maintenance"| SYS_DB
+    
+    B -->|"3. Creates Trip Drafts"| SYS_DB
+    B -->|"4. Triggers AI Suggest Vehicle"| SYS_AI
+    B -->|"5. Dispatches Trip & Generates QR"| SYS_DB
+    
+    C -->|"6. Scans QR to Check-In/Check-Out"| SYS_DB
+    C -->|"7. Updates Odometer & Fuel Reading"| SYS_DB
+    C -->|"8. Transmits Geolocation Updates"| SYS_MAPS
+    
+    SYS_DB -->|"9. Recalculates Driver Performance"| SYS_AI
+    SYS_DB -->|"10. Checks Fuel Theft Suspected"| SYS_AI
+    
+    D -->|"11. Financial Reports & Toll Auto-Imports"| SYS_DB
+
+    %% Styling
+    style A fill:#0EA5E9,stroke:#0369A1,stroke-width:2px,color:#fff
+    style B fill:#8B5CF6,stroke:#6D28D9,stroke-width:2px,color:#fff
+    style C fill:#22C55E,stroke:#15803D,stroke-width:2px,color:#fff
+    style D fill:#F59E0B,stroke:#B45309,stroke-width:2px,color:#fff
+    style SYS_DB fill:#1E293B,stroke:#475569,stroke-width:2px,color:#fff
+    style SYS_MAPS fill:#1E293B,stroke:#475569,stroke-width:2px,color:#fff
+    style SYS_AI fill:#1E293B,stroke:#475569,stroke-width:2px,color:#fff
+    style SYS_AUTH fill:#1E293B,stroke:#475569,stroke-width:2px,color:#fff
+```
+
+---
+
 ## 🌐 Live Demo
 
 > **Frontend**: `http://localhost:5173`  

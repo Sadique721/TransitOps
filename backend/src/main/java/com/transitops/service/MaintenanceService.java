@@ -28,7 +28,7 @@ public class MaintenanceService {
     // automatically switches the vehicle to In Shop, locking it out of dispatch.
     @Transactional
     public MaintenanceLog create(MaintenanceRequest request) {
-        Vehicle vehicle = vehicleRepository.findById(request.getVehicleId())
+        Vehicle vehicle = vehicleRepository.findByIdForUpdate(request.getVehicleId())
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found: " + request.getVehicleId()));
 
         if (vehicle.getStatus() == VehicleStatus.ON_TRIP) {
@@ -76,7 +76,8 @@ public class MaintenanceService {
         log.setIsActive(false);
         maintenanceLogRepository.save(log);
 
-        Vehicle vehicle = log.getVehicle();
+        Vehicle vehicle = vehicleRepository.findByIdForUpdate(log.getVehicle().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found"));
         if (vehicle.getStatus() != VehicleStatus.RETIRED) {
             VehicleStatus old = vehicle.getStatus();
             vehicle.setStatus(VehicleStatus.AVAILABLE);

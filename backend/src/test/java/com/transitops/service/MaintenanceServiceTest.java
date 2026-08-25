@@ -28,6 +28,7 @@ class MaintenanceServiceTest {
     @Mock private MaintenanceLogRepository maintenanceLogRepository;
     @Mock private VehicleRepository vehicleRepository;
     @Mock private AuditLogService auditLogService;
+    @Mock private com.transitops.service.EmailService emailService;
 
     @InjectMocks private MaintenanceService maintenanceService;
 
@@ -50,7 +51,7 @@ class MaintenanceServiceTest {
         request.setVehicleId(1L);
         request.setDescription("Oil change");
 
-        when(vehicleRepository.findById(1L)).thenReturn(Optional.of(vehicle));
+        when(vehicleRepository.findByIdForUpdate(1L)).thenReturn(Optional.of(vehicle));
         when(maintenanceLogRepository.findByVehicleIdAndIsActiveTrue(1L)).thenReturn(Optional.empty());
         when(maintenanceLogRepository.save(any())).thenAnswer(inv -> {
             MaintenanceLog log = inv.getArgument(0);
@@ -73,7 +74,7 @@ class MaintenanceServiceTest {
         request.setVehicleId(1L);
         request.setDescription("Oil change");
 
-        when(vehicleRepository.findById(1L)).thenReturn(Optional.of(vehicle));
+        when(vehicleRepository.findByIdForUpdate(1L)).thenReturn(Optional.of(vehicle));
 
         assertThatThrownBy(() -> maintenanceService.create(request))
                 .isInstanceOf(BusinessRuleException.class)
@@ -89,7 +90,7 @@ class MaintenanceServiceTest {
         request.setVehicleId(1L);
         request.setDescription("Oil change");
 
-        when(vehicleRepository.findById(1L)).thenReturn(Optional.of(vehicle));
+        when(vehicleRepository.findByIdForUpdate(1L)).thenReturn(Optional.of(vehicle));
 
         assertThatThrownBy(() -> maintenanceService.create(request))
                 .isInstanceOf(BusinessRuleException.class)
@@ -102,7 +103,7 @@ class MaintenanceServiceTest {
         request.setVehicleId(1L);
         request.setDescription("Oil change");
 
-        when(vehicleRepository.findById(1L)).thenReturn(Optional.of(vehicle));
+        when(vehicleRepository.findByIdForUpdate(1L)).thenReturn(Optional.of(vehicle));
         
         MaintenanceLog activeLog = MaintenanceLog.builder().isActive(true).build();
         activeLog.setId(99L);
@@ -121,6 +122,7 @@ class MaintenanceServiceTest {
         vehicle.setStatus(VehicleStatus.MAINTENANCE);
 
         when(maintenanceLogRepository.findById(100L)).thenReturn(Optional.of(log));
+        when(vehicleRepository.findByIdForUpdate(vehicle.getId())).thenReturn(Optional.of(vehicle));
 
         MaintenanceLog result = maintenanceService.close(100L);
 
@@ -136,6 +138,7 @@ class MaintenanceServiceTest {
         log.setId(100L);
 
         when(maintenanceLogRepository.findById(100L)).thenReturn(Optional.of(log));
+        when(vehicleRepository.findByIdForUpdate(vehicle.getId())).thenReturn(Optional.of(vehicle));
 
         maintenanceService.close(100L);
 
