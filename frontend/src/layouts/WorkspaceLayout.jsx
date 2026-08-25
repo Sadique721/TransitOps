@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import AiAssistantWidget from '../components/AiAssistantWidget';
 
 const NAV_ALL = [
   { name: 'Metric Flow',    path: '/dashboard',     icon: '📊', roles: ['FLEET_MANAGER'], color: '#0EA5E9' },
@@ -148,10 +149,12 @@ export default function WorkspaceLayout({ children }) {
         </header>
 
         {/* Page content */}
-        <div style={{ flex:1, overflowY:'auto', padding:'22px' }}>
+        <div style={{ flex:1, overflowY:'auto', padding:'22px', position:'relative' }}>
           {children}
+          <AiAssistantWidget />
         </div>
       </div>
     </div>
   );
 }
+
