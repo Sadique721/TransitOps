@@ -52,6 +52,12 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/", "/index.html", "/assets/**", "/vite.svg", "/favicon.ico", "/*.png", "/*.jpg").permitAll()
+                .requestMatchers(
+                    "/login", "/register", "/dashboard", "/live-ops", "/task-automate", 
+                    "/shipment-track", "/tracking", "/rent-co", "/acme-corp", "/bento-grid", 
+                    "/vehicles", "/drivers", "/trips", "/maintenance"
+                ).permitAll()
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/ws/**").permitAll()
                 .anyRequest().authenticated()
