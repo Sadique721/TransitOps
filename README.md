@@ -32,6 +32,17 @@
 </tr>
 </table>
 
+<!-- ========== NEW: SYSTEM DIAGRAM SECTION ========== -->
+## 📊 System Architecture & Workflow
+
+```mermaid
+flowchart TD
+    A[Transit Requests] --> B[Logistics Planner]
+    B --> C[Route Optimization Engine]
+    C --> D[Fleet Scheduling]
+    D --> E[Real-Time Tracking Dispatcher]
+```
+
 ---
 
 <p align="center">
