@@ -7,196 +7,206 @@ import 'leaflet/dist/leaflet.css';
 const redIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-  iconSize: [20, 33], iconAnchor: [10, 33], shadowSize: [33, 33],
+  iconSize: [20, 33],
+  iconAnchor: [10, 33],
+  shadowSize: [33, 33],
 });
 
 const trucks = [
-  { id: 'RE-74ER453TR5', status: 'On Route', time: '02:47:24', left: '58 min. left', img: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=200&q=60' },
-  { id: 'YR-34DFR734W2', status: 'On Route', time: '01:38:47', left: '57 min. left', img: 'https://images.unsplash.com/photo-1519003300449-424ad0405076?w=200&q=60', selected: true },
-  { id: 'DW-847DE74E4R', status: 'On Route', time: '03:29:58', left: '78 min. left', img: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=200&q=60' },
-  { id: 'AQ-2S7DRE141E', status: 'Waiting', time: '03:29:58', left: '20 min. left', img: 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=200&q=60' },
-  { id: 'BG-ER74R69B4R', status: 'On Route', time: '00:28:38', left: '88 min. left', img: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=200&q=60' },
-  { id: 'CV-414ER58SER', status: 'Waiting', time: '02:38:47', left: '18 min. left', img: 'https://images.unsplash.com/photo-1519003300449-424ad0405076?w=200&q=60' },
+  { id: 'TRK-74ER453', status: 'On Route', time: '02:47:24', left: '58 min. left', model: 'Volvo FH16 Globetrotter', speed: '78 km/h', driver: 'Arun V.', img: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=200&q=60' },
+  { id: 'TRK-34DFR73', status: 'On Route', time: '01:38:47', left: '57 min. left', model: 'Scania R500 V8', speed: '82 km/h', driver: 'George D.', img: 'https://images.unsplash.com/photo-1519003300449-424ad0405076?w=200&q=60' },
+  { id: 'TRK-847DE74', status: 'On Route', time: '03:29:58', left: '78 min. left', model: 'Mercedes Actros 2645', speed: '65 km/h', driver: 'Ramesh K.', img: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=200&q=60' },
+  { id: 'TRK-2S7DRE1', status: 'Waiting', time: '03:29:58', left: '20 min. left', model: 'MAN TGX 18.500', speed: '0 km/h', driver: 'Suresh P.', img: 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=200&q=60' },
+  { id: 'TRK-ER74R69', status: 'On Route', time: '00:28:38', left: '88 min. left', model: 'DAF XF 530 Super', speed: '74 km/h', driver: 'Michael J.', img: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=200&q=60' },
 ];
 
-const partners = ['Shiphike - For Packages', 'Roambee', 'Post Hawk', 'Loginext', 'Forwardo', 'Lopez Pallets', 'Sonosolve'];
-const tabs = ['Shipping Info', 'Vehicle Info', 'Documents', 'Company', 'Billing'];
+const tabs = ['Telemetry', 'Cargo Spec', 'Waybill Docs', 'Driver Vitals'];
 
 export default function TrackingDashboard() {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(trucks[1]);
-  const [activeTab, setActiveTab] = useState('Shipping Info');
+  const [activeTab, setActiveTab] = useState('Telemetry');
 
   return (
-    <div style={{ display: 'flex', height: '100vh', background: '#f5f5f5', fontFamily: 'Inter, sans-serif', overflow: 'hidden' }}>
-      {/* ── SIDEBAR ── George Davidson */}
-      <div style={{ width: 200, background: '#fff', borderRight: '1px solid #f0f0f0', display: 'flex', flexDirection: 'column' }}>
-        {/* Profile */}
-        <div style={{ padding: '16px 14px', borderBottom: '1px solid #f5f5f5', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=50&q=80" style={{ width: 38, height: 38, borderRadius: '50%', objectFit: 'cover' }} />
-          <div>
-            <div style={{ fontSize: 12, fontWeight: 700, color: '#1a1a1a' }}>George Davidson</div>
-            <div style={{ fontSize: 9, color: '#aaa' }}>george.davidson@email.com</div>
+    <div className="space-y-5 pb-10">
+      {/* ── HEADER ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900/80 border border-slate-800 rounded-2xl p-4">
+        <div>
+          <div className="flex items-center gap-2">
+            <span className="text-xl">📍</span>
+            <h1 className="text-xl font-black text-slate-100">Live GPS Fleet Tracking Deck</h1>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              5 VEHICLES MONITORED
+            </span>
           </div>
+          <p className="text-xs text-slate-400 mt-0.5">Real-time coordinates, speed sensors, and telemetry feeds</p>
         </div>
-        {/* Nav */}
-        <div style={{ flex: 1, padding: '8px 8px' }}>
-          {[
-            { label: 'Dashboard', icon: '📊', path: '/dashboard' },
-            { label: 'Partners', icon: '🤝', path: '/live-ops' },
-            { label: 'Chats', icon: '💬', path: '/shipment-track', badge: '7' },
-            { label: 'Tracking', icon: '📍', path: '/tracking', active: true },
-            { label: 'Request', icon: '📋', path: '/vehicles', sub: ['Trucks', 'Cargos', 'Repair', 'Drivers', 'Reports'], counts: [null, 5, null, null, 4] },
-            { label: 'Analysis', icon: '📈', path: '/drivers' },
-            { label: 'History', icon: '🕒', path: '/trips' },
-          ].map(item => (
-            <div key={item.label}>
-              <button onClick={() => navigate(item.path)} style={{
-                width: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '8px 10px',
-                border: 'none', cursor: 'pointer', borderRadius: 8, marginBottom: 2,
-                background: item.active ? '#ef4444' : 'transparent',
-                color: item.active ? '#fff' : '#888', fontWeight: item.active ? 700 : 500, fontSize: 12, textAlign: 'left',
-              }}>
-                <span style={{ fontSize: 14 }}>{item.icon}</span>
-                <span style={{ flex: 1 }}>{item.label}</span>
-                {item.badge && <span style={{ background: '#fee2e2', color: '#ef4444', fontSize: 9, padding: '1px 5px', borderRadius: 8, fontWeight: 700 }}>{item.badge}</span>}
-              </button>
-              {item.sub && item.sub.map((s, si) => (
-                <div key={s} style={{ display: 'flex', justifyContent: 'space-between', padding: '5px 10px 5px 28px', fontSize: 11, color: '#aaa', cursor: 'pointer' }}>
-                  <span>{s}</span>
-                  {item.counts[si] && <span style={{ background: '#fee2e2', color: '#ef4444', fontSize: 9, padding: '1px 5px', borderRadius: 8, fontWeight: 700 }}>{item.counts[si]}</span>}
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-        <div style={{ padding: '10px 8px', borderTop: '1px solid #f5f5f5' }}>
-          <button style={{ width: '100%', background: '#ef4444', color: '#fff', border: 'none', borderRadius: 8, padding: '9px 12px', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>Create new request</button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => navigate('/live-ops')}
+            className="px-3.5 py-2 text-xs font-bold rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/25 transition"
+          >
+            🗺️ Full Radar
+          </button>
         </div>
       </div>
 
-      {/* ── CENTER PANEL: Truck grid ── */}
-      <div style={{ width: 320, background: '#fff', borderRight: '1px solid #f0f0f0', display: 'flex', flexDirection: 'column' }}>
-        {/* Header */}
-        <div style={{ padding: '16px 14px', borderBottom: '1px solid #f5f5f5' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-            <h2 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#1a1a1a' }}>Tracking</h2>
-            <span style={{ fontSize: 16, color: '#aaa', cursor: 'pointer' }}>🔍</span>
+      {/* ── MAIN CONTENT: LIST + MAP + DETAIL CARD ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        {/* Active Trucks List */}
+        <div className="lg:col-span-4 bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col space-y-3">
+          <div className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">Active GPS Transponders</div>
+          <div className="space-y-2 max-h-96 overflow-y-auto pr-1">
+            {trucks.map((t) => {
+              const isSel = selected.id === t.id;
+              return (
+                <div
+                  key={t.id}
+                  onClick={() => setSelected(t)}
+                  className={`p-3 rounded-xl cursor-pointer border transition flex items-center gap-3 ${
+                    isSel
+                      ? 'bg-sky-950/40 border-sky-500/40 text-sky-100'
+                      : 'bg-slate-950/50 border-slate-800 text-slate-300 hover:border-slate-700'
+                  }`}
+                >
+                  <img src={t.img} className="w-10 h-10 rounded-lg object-cover flex-shrink-0" alt="" />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold font-mono truncate">{t.id}</span>
+                      <span
+                        className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${
+                          t.status === 'On Route' ? 'bg-emerald-500/15 text-emerald-400' : 'bg-amber-500/15 text-amber-400'
+                        }`}
+                      >
+                        {t.status}
+                      </span>
+                    </div>
+                    <div className="text-[11px] text-slate-400 mt-0.5 truncate">{t.model}</div>
+                    <div className="flex justify-between text-[10px] text-slate-500 mt-1 font-mono">
+                      <span>Speed: {t.speed}</span>
+                      <span>{t.left}</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-          <div style={{ fontSize: 10, color: '#aaa', marginBottom: 8 }}>Filter by Partners</div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
-            {partners.map((p, i) => (
-              <span key={p} style={{ background: '#f5f5f5', border: '1px solid #e5e7eb', borderRadius: 20, padding: '2px 8px', fontSize: 9, color: '#666', cursor: 'pointer' }}>
-                {p} {i % 2 === 0 ? '12' : '11'}
-              </span>
-            ))}
+        </div>
+
+        {/* Selected Truck Card & Telemetry Tabs */}
+        <div className="lg:col-span-8 space-y-5">
+          {/* Map Preview */}
+          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden relative h-64 sm:h-72">
+            <MapContainer center={[50.35, 28.65]} zoom={8} style={{ height: '100%', width: '100%' }} zoomControl={false}>
+              <TileLayer
+                attribution="&copy; OpenStreetMap &copy; CARTO"
+                url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+              />
+              <Polyline
+                positions={[
+                  [50.45, 30.52],
+                  [50.25, 28.65],
+                  [50.61, 26.25],
+                ]}
+                color="#0EA5E9"
+                weight={4}
+              />
+              <Marker position={[50.25, 28.65]} icon={redIcon} />
+            </MapContainer>
+
+            {/* Selected Floating Pill */}
+            <div className="absolute top-3 left-3 z-[1000] bg-slate-950/90 border border-slate-800 rounded-xl p-3 backdrop-blur">
+              <div className="text-[10px] text-sky-400 font-bold uppercase">Tracking Selected Asset</div>
+              <div className="text-sm font-black text-slate-100 font-mono mt-0.5">{selected.id}</div>
+              <div className="text-xs text-slate-400 mt-1">Driver: {selected.driver} · Current Speed: {selected.speed}</div>
+            </div>
           </div>
-          <div style={{ marginTop: 8 }}>
-            <div style={{ fontSize: 10, color: '#aaa', marginBottom: 6 }}>Show</div>
-            <div style={{ display: 'flex', gap: 4 }}>
-              {['Active', 'Inactive', 'All'].map((s, i) => (
-                <button key={s} style={{ padding: '3px 10px', borderRadius: 20, border: 'none', cursor: 'pointer', fontSize: 10, fontWeight: 600, background: i === 0 ? '#fee2e2' : '#f5f5f5', color: i === 0 ? '#ef4444' : '#888' }}>
-                  {s}{i === 2 ? ' 47' : ''}
+
+          {/* Details & Telemetry Tabs */}
+          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5">
+            <div className="flex gap-2 border-b border-slate-800 pb-3 mb-4 overflow-x-auto">
+              {tabs.map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition whitespace-nowrap ${
+                    activeTab === tab
+                      ? 'bg-sky-500/20 text-sky-400 border border-sky-500/30'
+                      : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  {tab}
                 </button>
               ))}
             </div>
-          </div>
-        </div>
 
-        {/* Truck cards grid 2-col */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '10px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-          {trucks.map(trk => (
-            <div key={trk.id} onClick={() => setSelected(trk)} style={{
-              border: selected.id === trk.id ? '2px solid #ef4444' : '2px solid #f0f0f0',
-              borderRadius: 12, padding: '10px', cursor: 'pointer', background: '#fff',
-              boxShadow: selected.id === trk.id ? '0 2px 12px rgba(239,68,68,0.15)' : 'none',
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                <span style={{ fontSize: 9, fontWeight: 600, color: '#888', fontFamily: 'monospace' }}>{trk.id}</span>
-                <span style={{ fontSize: 8, background: trk.status === 'On Route' ? '#d1fae5' : '#fef3c7', color: trk.status === 'On Route' ? '#059669' : '#d97706', padding: '1px 5px', borderRadius: 8, fontWeight: 700 }}>● {trk.status}</span>
+            {activeTab === 'Telemetry' && (
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800">
+                  <div className="text-[10px] text-slate-500">Engine RPM</div>
+                  <div className="text-base font-bold font-mono text-slate-200 mt-1">1,420 RPM</div>
+                </div>
+                <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800">
+                  <div className="text-[10px] text-slate-500">Coolant Temp</div>
+                  <div className="text-base font-bold font-mono text-emerald-400 mt-1">88°C (Normal)</div>
+                </div>
+                <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800">
+                  <div className="text-[10px] text-slate-500">Fuel Level</div>
+                  <div className="text-base font-bold font-mono text-sky-400 mt-1">74% (320L)</div>
+                </div>
+                <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800">
+                  <div className="text-[10px] text-slate-500">Battery Status</div>
+                  <div className="text-base font-bold font-mono text-slate-200 mt-1">24.2V Optimal</div>
+                </div>
               </div>
-              <img src={trk.img} style={{ width: '100%', height: 60, objectFit: 'cover', borderRadius: 6, filter: 'grayscale(80%)', marginBottom: 6 }} />
-              <div style={{ fontSize: 13, fontWeight: 800, color: '#1a1a1a', fontFamily: 'monospace' }}>{trk.time}</div>
-              <div style={{ fontSize: 9, color: '#aaa', marginTop: 2 }}>{trk.left}</div>
-            </div>
-          ))}
-        </div>
-      </div>
+            )}
 
-      {/* ── RIGHT DETAIL PANEL ── */}
-      <div style={{ flex: 1, background: '#fff', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-        {/* Selected truck header */}
-        <div style={{ padding: '16px 20px', borderBottom: '1px solid #f5f5f5', display: 'flex', alignItems: 'center', gap: 14 }}>
-          <span style={{ fontSize: 16, fontWeight: 800, color: '#1a1a1a', fontFamily: 'monospace' }}>{selected.id}</span>
-          <span style={{ background: '#d1fae5', color: '#059669', fontSize: 10, fontWeight: 700, padding: '3px 10px', borderRadius: 20 }}>● On Route</span>
-          <div style={{ marginLeft: 'auto', display: 'flex', gap: 8 }}>
-            <button style={{ background: '#fff', border: '2px solid #ef4444', color: '#ef4444', borderRadius: 8, padding: '6px 14px', fontSize: 11, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>📞 Call Driver</button>
-            <button style={{ background: '#ef4444', border: 'none', color: '#fff', borderRadius: 8, padding: '6px 14px', fontSize: 11, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}>💬 Chat with Driver</button>
-          </div>
-        </div>
-
-        {/* Tabs */}
-        <div style={{ display: 'flex', gap: 0, borderBottom: '1px solid #f0f0f0', padding: '0 20px' }}>
-          {tabs.map(t => (
-            <button key={t} onClick={() => setActiveTab(t)} style={{
-              padding: '10px 16px', border: 'none', background: 'transparent', cursor: 'pointer',
-              fontSize: 11, fontWeight: 600, color: activeTab === t ? '#ef4444' : '#aaa',
-              borderBottom: activeTab === t ? '2px solid #ef4444' : '2px solid transparent',
-            }}>{t}</button>
-          ))}
-        </div>
-
-        {/* Content */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '16px 20px' }}>
-          <h3 style={{ fontSize: 15, fontWeight: 700, color: '#1a1a1a', marginBottom: 14, marginTop: 0 }}>Current Truck Capacity</h3>
-
-          {/* Truck with capacity */}
-          <div style={{ position: 'relative', marginBottom: 20, borderRadius: 12, overflow: 'hidden', background: '#f5f5f5', height: 140 }}>
-            <img src={selected.img} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(70%)' }} />
-            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
-              <div style={{ height: '100%', width: '82%', background: 'repeating-linear-gradient(-45deg, rgba(239,68,68,0.75), rgba(239,68,68,0.75) 5px, rgba(239,68,68,0.55) 5px, rgba(239,68,68,0.55) 10px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span style={{ fontSize: 32, fontWeight: 900, color: '#fff', textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>82%</span>
+            {activeTab === 'Cargo Spec' && (
+              <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Cargo Type:</span>
+                  <span className="font-semibold text-slate-200">Industrial Machinery & Components</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Gross Payload:</span>
+                  <span className="font-mono text-amber-400 font-bold">8,450 KG</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Security Seal Status:</span>
+                  <span className="text-emerald-400 font-bold">✓ Intact (Barcode Verified)</span>
+                </div>
               </div>
-            </div>
-          </div>
+            )}
 
-          {/* Route map */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-            <h3 style={{ fontSize: 14, fontWeight: 700, color: '#1a1a1a', margin: 0 }}>Route</h3>
-            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              <span style={{ fontSize: 13, fontWeight: 700, color: '#1a1a1a', fontFamily: 'monospace' }}>1:38:47</span>
-              <span style={{ fontSize: 11, color: '#aaa' }}>57 min. left</span>
-              <button style={{ background: '#f5f5f5', border: '1px solid #e5e7eb', borderRadius: 8, padding: '5px 10px', fontSize: 10, fontWeight: 600, color: '#666', cursor: 'pointer' }}>✏️ Change Route</button>
-            </div>
-          </div>
-
-          <div style={{ height: 140, borderRadius: 12, overflow: 'hidden', border: '1px solid #f0f0f0', marginBottom: 20, position: 'relative', zIndex: 0 }}>
-            <MapContainer center={[50.35, 28.65]} zoom={7} style={{ height: '100%', width: '100%' }} zoomControl={false}>
-              <TileLayer attribution='&copy; OpenStreetMap' url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
-              <Polyline positions={[[50.4501, 30.5234], [50.2547, 28.6587]]} color="#ef4444" weight={3} />
-              <Marker position={[50.4501, 30.5234]} icon={redIcon} />
-              <Marker position={[50.2547, 28.6587]} icon={redIcon} />
-            </MapContainer>
-          </div>
-
-          {/* Cargo photo reports */}
-          <h3 style={{ fontSize: 14, fontWeight: 700, color: '#1a1a1a', marginBottom: 12 }}>Cargo Photo Reports</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr auto', gap: 10 }}>
-            {[
-              { img: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=120&q=60', label: 'Photo #1 Cargo Photo', loc: '112 Maev City · 01:15 PM' },
-              { img: 'https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?w=120&q=60', label: 'Photo #2 Cargo Photo', loc: '954 Sheffield · 03:10 PM' },
-              { img: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=120&q=60', label: 'Photo #3 Cargo Photo', loc: '397 Hathaway · 02:40 PM' },
-            ].map(p => (
-              <div key={p.label}>
-                <img src={p.img} style={{ width: '100%', height: 70, objectFit: 'cover', borderRadius: 8, border: '1px solid #f0f0f0' }} />
-                <div style={{ fontSize: 9, color: '#ef4444', fontWeight: 600, marginTop: 4 }}>{p.label}</div>
-                <div style={{ fontSize: 8, color: '#aaa' }}>{p.loc}</div>
+            {activeTab === 'Waybill Docs' && (
+              <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-200">e-Waybill-2026-0903.pdf</span>
+                  <button className="px-2.5 py-1 rounded bg-sky-500/20 text-sky-400 font-bold text-[11px]">Download</button>
+                </div>
+                <div className="flex justify-between items-center pt-2 border-t border-slate-800">
+                  <span className="text-slate-200">Insurance_Coverage_Certificate.pdf</span>
+                  <button className="px-2.5 py-1 rounded bg-sky-500/20 text-sky-400 font-bold text-[11px]">Download</button>
+                </div>
               </div>
-            ))}
-            <div style={{ border: '1.5px dashed #f0f0f0', borderRadius: 8, height: 70, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', minWidth: 70 }}>
-              <span style={{ fontSize: 20, color: '#ef4444' }}>+</span>
-              <span style={{ fontSize: 9, color: '#aaa', marginTop: 4, textAlign: 'center' }}>Add Photo</span>
-            </div>
+            )}
+
+            {activeTab === 'Driver Vitals' && (
+              <div className="p-4 bg-slate-950/60 rounded-xl border border-slate-800 text-xs space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Assigned Driver:</span>
+                  <span className="font-semibold text-slate-200">{selected.driver}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Duty Hours Today:</span>
+                  <span className="font-mono text-slate-200">4 hrs 15 mins (Rest break due in 1h 45m)</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Driver Safety Index:</span>
+                  <span className="text-emerald-400 font-bold font-mono">98 / 100</span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

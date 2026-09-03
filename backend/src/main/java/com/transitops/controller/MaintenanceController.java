@@ -6,6 +6,7 @@ import com.transitops.service.MaintenanceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,18 +18,28 @@ public class MaintenanceController {
 
     private final MaintenanceService maintenanceService;
 
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'FLEET_MANAGER', 'SAFETY_OFFICER')")
+    public ResponseEntity<List<MaintenanceLog>> findAll() {
+        return ResponseEntity.ok(maintenanceService.findAll());
+    }
+
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'FLEET_MANAGER', 'SAFETY_OFFICER')")
     public ResponseEntity<MaintenanceLog> create(@Valid @RequestBody MaintenanceRequest request) {
         return ResponseEntity.ok(maintenanceService.create(request));
     }
 
     @PatchMapping("/{id}/close")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FLEET_MANAGER', 'SAFETY_OFFICER')")
     public ResponseEntity<MaintenanceLog> close(@PathVariable Long id) {
         return ResponseEntity.ok(maintenanceService.close(id));
     }
 
     @GetMapping("/vehicle/{vehicleId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FLEET_MANAGER', 'SAFETY_OFFICER')")
     public ResponseEntity<List<MaintenanceLog>> findByVehicle(@PathVariable Long vehicleId) {
         return ResponseEntity.ok(maintenanceService.findByVehicle(vehicleId));
     }
 }
+

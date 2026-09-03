@@ -92,4 +92,9 @@ public class MaintenanceService {
     public List<MaintenanceLog> findByVehicle(Long vehicleId) {
         return maintenanceLogRepository.findByVehicleId(vehicleId);
     }
+
+    public List<MaintenanceLog> findAll() {
+        return maintenanceLogRepository.findAll();
+    }
 }
+

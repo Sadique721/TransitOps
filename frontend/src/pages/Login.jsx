@@ -3,8 +3,10 @@ import { useAuth } from '../context/AuthContext'
 import { Link } from 'react-router-dom'
 
 const roles = [
-  { role: 'Fleet Manager', email: 'entitykart@gmail.com', password: 'Amin@123', icon: '🚛', color: '#0EA5E9', label: 'Full Dashboard Access' },
-  { role: 'Driver', email: 'driver@transitops.com', password: 'Amin@123', icon: '🚗', color: '#22C55E', label: 'Trip & Route Access' },
+  { role: 'Fleet Manager', email: 'entitykart@gmail.com', password: 'Amin@123', icon: '🚛', color: '#0EA5E9', label: 'Full Super Access' },
+  { role: 'Driver', email: 'driver@transitops.com', password: 'Amin@123', icon: '🚗', color: '#22C55E', label: 'Trips & GPS Tracking' },
+  { role: 'Safety Officer', email: 'safety@transitops.com', password: 'Amin@123', icon: '🛡️', color: '#F59E0B', label: 'Safety & Health Logs' },
+  { role: 'Financial Analyst', email: 'finance@transitops.com', password: 'Amin@123', icon: '📊', color: '#8B5CF6', label: 'Finance & ROI Analytics' },
 ]
 
 const stats = [

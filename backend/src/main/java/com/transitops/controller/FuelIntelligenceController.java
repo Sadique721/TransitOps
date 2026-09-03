@@ -4,6 +4,7 @@ import com.transitops.entity.Trip;
 import com.transitops.service.FuelIntelligenceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,12 +20,14 @@ public class FuelIntelligenceController {
 
     // Dashboard card: "Fuel Theft Detection" — all completed trips currently flagged.
     @GetMapping("/theft-alerts")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FLEET_MANAGER', 'FINANCIAL_ANALYST', 'SAFETY_OFFICER')")
     public ResponseEntity<List<Trip>> theftAlerts() {
         return ResponseEntity.ok(fuelIntelligenceService.findSuspectedTheftTrips());
     }
 
     // Mileage trend for a single vehicle (km/liter, based on its completed-trip history).
     @GetMapping("/vehicles/{vehicleId}/mileage-trend")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FLEET_MANAGER', 'FINANCIAL_ANALYST', 'SAFETY_OFFICER')")
     public ResponseEntity<Map<String, Object>> mileageTrend(@PathVariable Long vehicleId) {
         Optional<Double> avg = fuelIntelligenceService.averageKmPerLiterForVehicle(vehicleId);
         return ResponseEntity.ok(Map.of(

@@ -5,136 +5,127 @@ export default function BentoGridPage() {
   const navigate = useNavigate();
 
   return (
-    <div style={{
-      minHeight: '100vh', background: 'linear-gradient(135deg, #0f0e1a 0%, #1a1040 60%, #0f0e1a 100%)',
-      fontFamily: 'Inter, sans-serif', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px',
-    }}>
-      <div style={{ width: '100%', maxWidth: 920 }}>
-        {/* Bento Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', gridTemplateRows: 'auto auto', gap: 14 }}>
-          {/* Row 1 */}
-
-          {/* Card 1: Effortless Prompt Perfection */}
-          <div style={{ background: '#1a1940', border: '1px solid #2a2860', borderRadius: 18, padding: '28px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div>
-              <div style={{ width: 36, height: 36, background: 'linear-gradient(135deg, #8b5cf6, #6366f1)', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, marginBottom: 18 }}>✨</div>
-              <div style={{ fontSize: 18, fontWeight: 800, color: '#fff', lineHeight: 1.3, marginBottom: 20 }}>Effortless<br />Prompt<br />Perfection</div>
-            </div>
-            <div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: '#a78bfa', marginBottom: 4 }}>14 days trial</div>
-              <div style={{ fontSize: 11, color: '#555' }}>after – $5/month</div>
-            </div>
+    <div className="space-y-5 pb-10">
+      {/* ── HEADER ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900/80 border border-slate-800 rounded-2xl p-4">
+        <div>
+          <div className="flex items-center gap-2">
+            <span className="text-xl">🔮</span>
+            <h1 className="text-xl font-black text-slate-100">Bento Grid Intelligence Matrix</h1>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+              AI ENGINE READY
+            </span>
           </div>
+          <p className="text-xs text-slate-400 mt-0.5">Automated algorithmic decision matrices and intelligent routing</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => navigate('/task-automate')}
+            className="px-3.5 py-2 text-xs font-bold rounded-lg bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 hover:bg-indigo-500/25 transition"
+          >
+            🤖 Task Automation
+          </button>
+        </div>
+      </div>
 
-          {/* Card 2 (center hero): Your AI Prompt Companion */}
-          <div style={{
-            background: 'linear-gradient(145deg, #7c3aed, #6366f1, #4f46e5)',
-            borderRadius: 18, padding: '36px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between',
-            gridRow: '1 / 3', position: 'relative', overflow: 'hidden',
-          }}>
-            <div style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 16 }}>
-                <span style={{ fontSize: 18 }}>✨</span>
-                <span style={{ fontWeight: 700, fontSize: 14, color: 'rgba(255,255,255,0.9)' }}>PromptPal</span>
-              </div>
-              <h1 style={{ fontSize: 28, fontWeight: 900, color: '#fff', lineHeight: 1.25, margin: '0 0 28px' }}>Your AI Prompt<br />Companion</h1>
+      {/* ── BENTO GRID CONTAINER ── */}
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {/* Card 1: Fuel Theft Algorithmic Sentinel */}
+        <div className="p-6 bg-slate-900/80 border border-slate-800 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div className="w-10 h-10 rounded-xl bg-red-500/20 border border-red-500/30 flex items-center justify-center text-xl mb-4">
+              🚨
             </div>
-            {/* Galaxy orb */}
-            <div style={{
-              width: 180, height: 180, borderRadius: '50%', position: 'relative', zIndex: 1, flexShrink: 0,
-              background: 'radial-gradient(circle at 35% 35%, #f97316, #8b5cf6 40%, #1d1b4b 75%, #0a0820)',
-              boxShadow: '0 0 60px rgba(139,92,246,0.5), 0 0 120px rgba(249,115,22,0.2)',
-              border: '2px solid rgba(255,255,255,0.08)',
-              overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              {/* Binary text ring - decorative */}
-              <div style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: 'transparent', border: '1px solid rgba(255,255,255,0.08)' }} />
-              <div style={{ fontSize: 7, color: 'rgba(255,255,255,0.3)', fontFamily: 'monospace', textAlign: 'center', lineHeight: 1.6, padding: '0 20px' }}>
-                10101 1001010110 010 001<br />1 10101 1001010110 010<br />101 1001 01010 11010
-              </div>
-            </div>
-            <div style={{ position: 'relative', zIndex: 1, width: '100%', marginTop: 24 }}>
-              <button onClick={() => navigate('/dashboard')} style={{
-                width: '100%', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(4px)',
-                border: '1px solid rgba(255,255,255,0.3)', borderRadius: 30,
-                color: '#fff', fontSize: 14, fontWeight: 700, padding: '12px', cursor: 'pointer',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-              }}>
-                ✨ Generate
-              </button>
-            </div>
+            <h3 className="text-base font-bold text-slate-100">Fuel Theft Sentinel</h3>
+            <p className="text-xs text-slate-400 mt-2">
+              Continuous deviation detection comparing expected fuel vs actual odometer telemetry with 20% variance alerts.
+            </p>
           </div>
-
-          {/* Card 3: 25M */}
-          <div style={{ background: '#1a1940', border: '1px solid #2a2860', borderRadius: 18, padding: '28px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div style={{ width: 38, height: 38, background: 'rgba(99,102,241,0.15)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, marginBottom: 12 }}>✨</div>
-            <div>
-              <div style={{ fontSize: 42, fontWeight: 900, color: '#fff', letterSpacing: '-2px' }}>25M</div>
-              <div style={{ borderTop: '2px solid #3730a3', margin: '10px 0' }} />
-              <div style={{ fontSize: 12, color: '#6b7280', fontFamily: 'monospace' }}>created prompts</div>
-            </div>
-          </div>
-
-          {/* Row 2 */}
-
-          {/* Card 4: 12K happy users */}
-          <div style={{ background: '#1a1940', border: '1px solid #2a2860', borderRadius: 18, padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div>
-              <div style={{ fontSize: 32, fontWeight: 900, color: '#f97316', marginBottom: 6 }}>12K</div>
-              <div style={{ fontSize: 12, color: '#6b7280', marginBottom: 16 }}>happy users</div>
-            </div>
-            <div style={{ display: 'flex', gap: -8 }}>
-              {[
-                'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=40&q=80',
-                'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&q=80',
-              ].map((src, i) => (
-                <img key={i} src={src} style={{ width: 32, height: 32, borderRadius: '50%', border: '2px solid #0f0e1a', marginLeft: i > 0 ? -8 : 0, objectFit: 'cover' }} />
-              ))}
-              <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'linear-gradient(135deg, #8b5cf6, #6366f1)', border: '2px solid #0f0e1a', display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: -8 }}>✦</div>
-            </div>
-          </div>
-
-          {/* Card 5: Branching paths */}
-          <div style={{ background: '#1a1940', border: '1px solid #2a2860', borderRadius: 18, padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div style={{ width: 36, height: 36, background: '#f97316', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 17, marginBottom: 14 }}>↕</div>
-            <div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: '#fff', marginBottom: 6 }}>Branching paths</div>
-              <div style={{ fontSize: 11, color: '#6b7280', lineHeight: 1.5 }}>Explore multiple prompt directions with branching.</div>
-            </div>
-          </div>
-
-          {/* Card 6: Keyword enhancer */}
-          <div style={{ background: '#1a1940', border: '1px solid #2a2860', borderRadius: 18, padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div style={{ width: 36, height: 36, background: 'rgba(139,92,246,0.2)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 17, marginBottom: 14 }}>🏷️</div>
-            <div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: '#fff', marginBottom: 6 }}>Keyword enhancer</div>
-              <div style={{ fontSize: 11, color: '#6b7280', lineHeight: 1.5 }}>Boost your prompt precision with keywords.</div>
-            </div>
-          </div>
-
-          {/* Card 7: Prompt templates */}
-          <div style={{ background: '#1a1940', border: '1px solid #2a2860', borderRadius: 18, padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: 6 }}>Prompt templates</div>
-              <div style={{ fontSize: 11, color: '#6b7280', lineHeight: 1.5, marginBottom: 14 }}>Use pre-made templates to jumpstart creativity.</div>
-            </div>
-            <div>
-              <div style={{ background: '#fff', color: '#1a1a1a', display: 'inline-block', borderRadius: 20, padding: '3px 10px', fontSize: 10, fontWeight: 700, transform: 'rotate(15deg)', marginBottom: 10 }}>14 days trial</div>
-              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                {['📝 Rewrite', '🎁', '📄 PDF', '📊 PNG', '📋 JPG'].map(t => (
-                  <span key={t} style={{ background: 'rgba(99,102,241,0.15)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,0.3)', borderRadius: 20, padding: '3px 8px', fontSize: 9, fontWeight: 600 }}>{t}</span>
-                ))}
-              </div>
-            </div>
+          <div className="mt-4 pt-4 border-t border-slate-800 flex justify-between items-center text-xs">
+            <span className="text-emerald-400 font-mono font-bold">Active Engine</span>
+            <button onClick={() => navigate('/dashboard')} className="text-sky-400 font-bold hover:underline">
+              View Alerts →
+            </button>
           </div>
         </div>
 
-        {/* Go Back button */}
-        <div style={{ textAlign: 'center', marginTop: 28 }}>
-          <button onClick={() => navigate('/dashboard')} style={{
-            background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.4)',
-            color: '#a5b4fc', borderRadius: 30, padding: '10px 28px', fontSize: 13, fontWeight: 700, cursor: 'pointer',
-          }}>← Back to Dashboard</button>
+        {/* Card 2: AI Capacity Matching (Hero 2-span) */}
+        <div className="md:col-span-2 p-6 bg-gradient-to-br from-indigo-950/60 via-slate-900 to-purple-950/40 border border-indigo-500/30 rounded-2xl flex flex-col justify-between relative overflow-hidden">
+          <div className="relative z-10">
+            <div className="flex items-center gap-2 text-indigo-400 text-xs font-bold uppercase tracking-wider mb-2">
+              <span>✨</span> Algorithmic Suggestion Engine
+            </div>
+            <h2 className="text-xl sm:text-2xl font-black text-slate-100">Optimal Load Allocation</h2>
+            <p className="text-xs text-slate-300 mt-2 max-w-md">
+              Evaluates real-time payload mass against available fleet asset load ratings to minimize unused headroom and reduce fuel burn.
+            </p>
+          </div>
+
+          <div className="relative z-10 mt-6 flex flex-col sm:flex-row gap-3">
+            <button
+              onClick={() => navigate('/trips')}
+              className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl transition shadow-lg shadow-indigo-600/30"
+            >
+              Test Suggestion in Trips
+            </button>
+          </div>
+        </div>
+
+        {/* Card 3: Driver Performance Index */}
+        <div className="p-6 bg-slate-900/80 border border-slate-800 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div className="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-500/30 flex items-center justify-center text-xl mb-4">
+              🏆
+            </div>
+            <h3 className="text-base font-bold text-slate-100">Driver Scoring</h3>
+            <p className="text-xs text-slate-400 mt-2">
+              Composite ranking: 50% safety score, 40% completion rate, 10% trip volume.
+            </p>
+          </div>
+          <div className="mt-4 pt-4 border-t border-slate-800 flex justify-between items-center text-xs">
+            <span className="text-sky-400 font-mono font-bold">Leaderboard Ready</span>
+            <button onClick={() => navigate('/drivers')} className="text-sky-400 font-bold hover:underline">
+              Inspect →
+            </button>
+          </div>
+        </div>
+
+        {/* Card 4: Vehicle Health Diagnostic */}
+        <div className="md:col-span-2 p-6 bg-slate-900/80 border border-slate-800 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2">
+              <span>🔧</span> Maintenance Diagnostics
+            </div>
+            <h3 className="text-lg font-bold text-slate-100">Predictive Health Analysis</h3>
+            <p className="text-xs text-slate-400 mt-2">
+              Composite health index derived from odometer lifetime thresholds (30%), repair frequency (35%), and shop downtime ratios (35%).
+            </p>
+          </div>
+          <div className="mt-4 flex justify-between items-center pt-3 border-t border-slate-800 text-xs">
+            <span className="text-emerald-400 font-mono">Status: 92/100 Fleet Avg</span>
+            <button onClick={() => navigate('/vehicles')} className="text-sky-400 font-bold hover:underline">
+              Fleet Health Details →
+            </button>
+          </div>
+        </div>
+
+        {/* Card 5: Rule Engine Workflows */}
+        <div className="md:col-span-2 p-6 bg-slate-900/80 border border-slate-800 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div className="flex items-center gap-2 text-purple-400 text-xs font-bold uppercase tracking-wider mb-2">
+              <span>🤖</span> Automated Execution
+            </div>
+            <h3 className="text-lg font-bold text-slate-100">Workflow & Task Engine</h3>
+            <p className="text-xs text-slate-400 mt-2">
+              Trigger automated tasks, approval gates, license renewal reminders, and maintenance lockouts without manual intervention.
+            </p>
+          </div>
+          <div className="mt-4 flex justify-between items-center pt-3 border-t border-slate-800 text-xs">
+            <span className="text-purple-400 font-mono">Engine: Active</span>
+            <button onClick={() => navigate('/task-automate')} className="text-sky-400 font-bold hover:underline">
+              Manage Tasks →
+            </button>
+          </div>
         </div>
       </div>
     </div>

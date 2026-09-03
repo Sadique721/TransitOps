@@ -26,4 +26,6 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
     @org.springframework.data.jpa.repository.Lock(jakarta.persistence.LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT t FROM Trip t WHERE t.id = :id")
     java.util.Optional<Trip> findByIdForUpdate(@org.springframework.data.repository.query.Param("id") Long id);
+
+    boolean existsByTripNumber(String tripNumber);
 }

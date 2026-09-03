@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,21 +22,25 @@ public class ReportController {
     private final ReportService reportService;
 
     @GetMapping("/dashboard")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FLEET_MANAGER', 'FINANCIAL_ANALYST', 'SAFETY_OFFICER')")
     public ResponseEntity<DashboardResponse> dashboard() {
         return ResponseEntity.ok(reportService.dashboard());
     }
 
     @GetMapping("/fuel-efficiency")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FLEET_MANAGER', 'FINANCIAL_ANALYST')")
     public ResponseEntity<Map<String, Double>> fuelEfficiency() {
         return ResponseEntity.ok(reportService.fuelEfficiencyPerVehicle());
     }
 
     @GetMapping("/operational-cost")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FLEET_MANAGER', 'FINANCIAL_ANALYST')")
     public ResponseEntity<Map<String, BigDecimal>> operationalCost() {
         return ResponseEntity.ok(reportService.operationalCostPerVehicle());
     }
 
     @GetMapping("/export/csv")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FLEET_MANAGER', 'FINANCIAL_ANALYST')")
     public ResponseEntity<String> exportCsv() {
         DashboardResponse d = reportService.dashboard();
         StringBuilder csv = new StringBuilder();

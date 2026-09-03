@@ -4,6 +4,7 @@ import com.transitops.dto.response.VehicleHealthResponse;
 import com.transitops.service.VehicleHealthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,9 @@ public class VehicleHealthController {
     private final VehicleHealthService vehicleHealthService;
 
     @GetMapping("/{id}/health-score")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FLEET_MANAGER', 'SAFETY_OFFICER')")
     public ResponseEntity<VehicleHealthResponse> healthScore(@PathVariable Long id) {
         return ResponseEntity.ok(vehicleHealthService.computeHealthScore(id));
     }
 }
+

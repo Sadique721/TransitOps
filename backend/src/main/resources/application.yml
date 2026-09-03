@@ -11,16 +11,14 @@ spring:
     password: ${DB_PASSWORD:avn_password_placeholder}
     driver-class-name: org.postgresql.Driver
     hikari:
-      maximum-pool-size: 3
-      minimum-idle: 1
+      maximum-pool-size: 20
+      minimum-idle: 5
       idle-timeout: 30000
       max-lifetime: 60000
+      connection-timeout: 20000
 
   jpa:
     hibernate:
-      # CRITICAL FIX: was "update" — dangerous in production (can silently alter/drop
-      # columns). Schema is now owned exclusively by Flyway migrations below;
-      # Hibernate only validates that entities match what Flyway created.
       ddl-auto: validate
     show-sql: false
     properties:
@@ -47,23 +45,33 @@ spring:
 
 jwt:
   secret: ${JWT_SECRET:transitops-super-secret-key-change-this-in-production-min-256-bits}
-  access-token-expiry-ms: 900000        # 15 minutes (PDF Rule #7 - session security)
+  access-token-expiry-ms: 900000        # 15 minutes
   refresh-token-expiry-ms: 604800000    # 7 days
 
-# CRITICAL FIX: CORS used to be allowedOriginPatterns=["*"]. Now restricted to an
-# explicit, configurable allow-list. Set ALLOWED_ORIGINS to a comma-separated list
-# of real frontend origins in production (e.g. https://app.transitops.com).
 cors:
   allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000}
 
-# HIGH FIX: basic in-memory rate limiting (per client IP, sliding window).
-# Good enough for a single-instance deployment; swap for a Redis-backed limiter
-# (see RateLimitFilter.java comments) once running multiple backend instances.
-rate-limit:
-  enabled: ${RATE_LIMIT_ENABLED:true}
-  requests-per-minute: ${RATE_LIMIT_RPM:120}
+security:
+  rate-limit:
+    max-attempts: 5
+    window-minutes: 15
 
-logging:
-  level:
-    com.transitops: INFO
-    org.springframework.security: WARN
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:h2:mem:transitops;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  flyway:
+    enabled: false

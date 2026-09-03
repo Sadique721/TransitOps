@@ -6,8 +6,12 @@ const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
-    const raw = localStorage.getItem('user')
-    return raw ? JSON.parse(raw) : null
+    try {
+      const raw = localStorage.getItem('user')
+      return raw ? JSON.parse(raw) : null
+    } catch {
+      return null
+    }
   })
   const navigate = useNavigate()
 
@@ -18,8 +22,15 @@ export function AuthProvider({ children }) {
     const u = { name: data.name, email: data.email, role: data.role, userId: data.userId }
     localStorage.setItem('user', JSON.stringify(u))
     setUser(u)
-    // Role-based redirect (Section 7.1)
-    navigate(u.role === 'DRIVER' ? '/trips' : '/dashboard')
+    
+    // Role-based landing redirection
+    if (u.role === 'DRIVER') {
+      navigate('/trips')
+    } else if (u.role === 'SAFETY_OFFICER') {
+      navigate('/vehicles')
+    } else {
+      navigate('/dashboard')
+    }
   }
 
   async function register(name, email, password, role) {

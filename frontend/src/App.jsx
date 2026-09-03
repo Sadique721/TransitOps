@@ -25,82 +25,108 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         
+        {/* Metric Flow Dashboard: Admin, Fleet Manager, Financial Analyst */}
         <Route path="/dashboard" element={
-          <ProtectedRoute>
-            <MetricFlowDashboard />
+          <ProtectedRoute allowedRoles={['ADMIN', 'FLEET_MANAGER', 'FINANCIAL_ANALYST']}>
+            <WorkspaceLayout>
+              <MetricFlowDashboard />
+            </WorkspaceLayout>
           </ProtectedRoute>
         } />
 
+        {/* Live Ops Radar: Admin, Fleet Manager, Safety Officer */}
         <Route path="/live-ops" element={
-          <ProtectedRoute>
-            <ATTMapsDeck />
+          <ProtectedRoute allowedRoles={['ADMIN', 'FLEET_MANAGER', 'SAFETY_OFFICER']}>
+            <WorkspaceLayout>
+              <ATTMapsDeck />
+            </WorkspaceLayout>
           </ProtectedRoute>
         } />
 
+        {/* Task Automation: Admin, Fleet Manager */}
         <Route path="/task-automate" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['ADMIN', 'FLEET_MANAGER']}>
             <WorkspaceLayout>
               <TaskAutomate />
             </WorkspaceLayout>
           </ProtectedRoute>
         } />
 
+        {/* Shipment Track: Admin, Fleet Manager, Driver */}
         <Route path="/shipment-track" element={
-          <ProtectedRoute>
-            <ShipmentTrack />
+          <ProtectedRoute allowedRoles={['ADMIN', 'FLEET_MANAGER', 'DRIVER']}>
+            <WorkspaceLayout>
+              <ShipmentTrack />
+            </WorkspaceLayout>
           </ProtectedRoute>
         } />
 
+        {/* GPS Tracking: Admin, Fleet Manager, Driver, Safety Officer */}
         <Route path="/tracking" element={
-          <ProtectedRoute>
-            <TrackingDashboard />
+          <ProtectedRoute allowedRoles={['ADMIN', 'FLEET_MANAGER', 'DRIVER', 'SAFETY_OFFICER']}>
+            <WorkspaceLayout>
+              <TrackingDashboard />
+            </WorkspaceLayout>
           </ProtectedRoute>
         } />
 
+        {/* Rent Co Leasing: Admin, Fleet Manager, Financial Analyst */}
         <Route path="/rent-co" element={
-          <ProtectedRoute>
-            <RentCoDashboard />
+          <ProtectedRoute allowedRoles={['ADMIN', 'FLEET_MANAGER', 'FINANCIAL_ANALYST']}>
+            <WorkspaceLayout>
+              <RentCoDashboard />
+            </WorkspaceLayout>
           </ProtectedRoute>
         } />
 
+        {/* AcmeCorp Financials: Admin, Fleet Manager, Financial Analyst */}
         <Route path="/acme-corp" element={
-          <ProtectedRoute>
-            <AcmeCorpDashboard />
+          <ProtectedRoute allowedRoles={['ADMIN', 'FLEET_MANAGER', 'FINANCIAL_ANALYST']}>
+            <WorkspaceLayout>
+              <AcmeCorpDashboard />
+            </WorkspaceLayout>
           </ProtectedRoute>
         } />
 
+        {/* Bento Grid Intelligence: Admin, Fleet Manager */}
         <Route path="/bento-grid" element={
-          <ProtectedRoute>
-            <BentoGridPage />
+          <ProtectedRoute allowedRoles={['ADMIN', 'FLEET_MANAGER']}>
+            <WorkspaceLayout>
+              <BentoGridPage />
+            </WorkspaceLayout>
           </ProtectedRoute>
         } />
         
+        {/* Vehicles Registry & Health: Admin, Fleet Manager, Safety Officer */}
         <Route path="/vehicles" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['ADMIN', 'FLEET_MANAGER', 'SAFETY_OFFICER']}>
             <WorkspaceLayout>
               <Vehicles />
             </WorkspaceLayout>
           </ProtectedRoute>
         } />
         
+        {/* Drivers Registry & Safety: Admin, Fleet Manager, Safety Officer */}
         <Route path="/drivers" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['ADMIN', 'FLEET_MANAGER', 'SAFETY_OFFICER']}>
             <WorkspaceLayout>
               <Drivers />
             </WorkspaceLayout>
           </ProtectedRoute>
         } />
         
+        {/* Trips Hub: Admin, Fleet Manager, Driver, Financial Analyst */}
         <Route path="/trips" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['ADMIN', 'FLEET_MANAGER', 'DRIVER', 'FINANCIAL_ANALYST']}>
             <WorkspaceLayout>
               <Trips />
             </WorkspaceLayout>
           </ProtectedRoute>
         } />
         
+        {/* Maintenance Logs: Admin, Fleet Manager, Safety Officer */}
         <Route path="/maintenance" element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['ADMIN', 'FLEET_MANAGER', 'SAFETY_OFFICER']}>
             <WorkspaceLayout>
               <Maintenance />
             </WorkspaceLayout>
